@@ -21,7 +21,6 @@ export function AuthContextProvider({ children }) {
         localStorage.setItem("coinInflation", JSON.stringify(response.data));
         setUser(response.data);
         navigate("/Home");
-        console.log(response.data);
       }
     } catch (error) {
       console.error("Error signing in:", error.message);

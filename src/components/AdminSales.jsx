@@ -7,7 +7,6 @@ export default function AdminSales() {
   useEffect(() => {
     FetchUserPurchase();
   }, []);
-console.log(adminSales)
   return (
     <div>
       <div className="bg-dark " style={{ height: "3rem" }}>

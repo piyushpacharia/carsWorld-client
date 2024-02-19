@@ -6,7 +6,6 @@ export default function UserDeposits() {
   useEffect(() => {
     FetchUserDeposits();
   }, []);
-  console.log(userDeposits)
   return (
     <div>
       <div className="bg-dark ">
