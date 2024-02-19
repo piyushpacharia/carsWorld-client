@@ -1,9 +1,11 @@
+
 import { useContext, useEffect } from "react";
 import AuthContext from "../AuthContext";
 import { useNavigate } from "react-router-dom";
 import { LuCoins } from "react-icons/lu";
 import UserContext from "../UserContext";
 import { IoCarSport } from "react-icons/io5";
+
 export default function Home() {
   const { user } = useContext(AuthContext);
   const {
@@ -18,14 +20,18 @@ export default function Home() {
     if (!user) {
       navigate("/");
     }
-  }, [user]);
+  }, [user, navigate]);
 
   useEffect(() => {
     if (user) {
       FetchTotalBalance();
       fetchTotalVehicleAmount();
     }
-  }, [user]);
+  }, [user, FetchTotalBalance, fetchTotalVehicleAmount]);
+
+  if (!user) {
+    return null; // or a loading indicator or a message to prompt login
+  }
 
   return (
     <div>

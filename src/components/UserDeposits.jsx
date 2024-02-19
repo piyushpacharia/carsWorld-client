@@ -3,9 +3,11 @@ import AdminContext from "../AdminContext";
 
 export default function UserDeposits() {
   const { FetchUserDeposits, userDeposits } = useContext(AdminContext);
+
   useEffect(() => {
     FetchUserDeposits();
   }, []);
+
   return (
     <div>
       <div className="bg-dark ">
@@ -13,18 +15,18 @@ export default function UserDeposits() {
       </div>
 
       <div>
-        {userDeposits.map((item, index) => (
+        {userDeposits && userDeposits.map((item, index) => (
           <div key={index}>
             <div className="mt-2 p-3" style={{ backgroundColor: "#d5d5d5" }}>
               <div className="row">
                 <div className="col-12 col-md-6 col-lg-6 col-sm-12">
                   <p>
-                    <b>User Name :</b>{item.depositedBy.name}
+                    <b>User Name :</b>{item.depositedBy?.name || "Unknown"}
                   </p>
                 </div>
                 <div className="col-12 col-md-6 col-lg-6 col-sm-12">
                   <p>
-                    <b>User Account No :</b> {item.depositedBy._id}
+                    <b>User Account No :</b> {item.depositedBy?._id || "Unknown"}
                   </p>
                 </div>
               </div>
@@ -43,12 +45,12 @@ export default function UserDeposits() {
               <div className="row">
                 <div className="col-12 col-md-6 col-lg-6 col-sm-12">
                   <p>
-                  <b>Deposited AT :</b> {item.updatedAt}
+                    <b>Deposited AT :</b> {item.updatedAt}
                   </p>
                 </div>
                 <div className="col-12 col-md-6 col-lg-6 col-sm-12">
                   <p>
-                    <b>Upi ID :</b> {item.upiID}
+                    <b>Upi ID :</b> {item.upiID || "Unknown"}
                   </p>
                 </div>
               </div>

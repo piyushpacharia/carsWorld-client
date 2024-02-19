@@ -1,3 +1,4 @@
+
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +10,16 @@ export function AuthContextProvider({ children }) {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("coinInflation");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+    setLoading(false);
+    navigate("/Home")
+  }, []);
+
   const SignIn = async (email, password) => {
     try {
       const response = await axios.post(`${BASE_URL}/auth/login`, {
@@ -21,10 +32,11 @@ export function AuthContextProvider({ children }) {
         setUser(response.data);
         navigate("/Home");
       } else {
-        alert("Invalid email or password:", response.statusText);
+        throw new Error("Invalid email or password");
       }
     } catch (error) {
-      alert("Invalid email or password:", error.message);
+      console.error("Error signing in:", error.message);
+      throw error;
     }
   };
 
@@ -41,6 +53,7 @@ export function AuthContextProvider({ children }) {
       }
     } catch (error) {
       console.error("Error signing up:", error.message);
+      throw error;
     }
   };
 
@@ -49,15 +62,6 @@ export function AuthContextProvider({ children }) {
     localStorage.removeItem("coinInflation");
     navigate("/");
   };
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("coinInflation");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-      navigate("/Home");
-    }
-    setLoading(false);
-  }, []);
 
   if (loading) {
     return <div>Loading...</div>;
