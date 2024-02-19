@@ -108,7 +108,7 @@ export function UserContextProvider({ children }) {
         alert("Vehicle purchased successfully!");
       }
     } catch (error) {
-      error.message;
+      alert(error.message);
     }
   };
   const fetchTotalVehicleAmount = async () => {

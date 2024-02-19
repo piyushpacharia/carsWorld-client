@@ -18,7 +18,7 @@ export default function App() {
   const location = useLocation();
 
   const isLoginPage = location.pathname === "/";
-  const isSignUpPage = location.pathname === "/About";
+  const isSignUpPage = location.pathname === "/Signup";
   return (
     <div>
       <AuthContextProvider>

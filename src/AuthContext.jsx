@@ -1,4 +1,3 @@
-
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +8,7 @@ export function AuthContextProvider({ children }) {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
- const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const SignIn = async (email, password) => {
     try {
       const response = await axios.post(`${BASE_URL}/auth/login`, {
@@ -21,9 +20,11 @@ export function AuthContextProvider({ children }) {
         localStorage.setItem("coinInflation", JSON.stringify(response.data));
         setUser(response.data);
         navigate("/Home");
+      } else {
+        alert("Invalid email or password:", response.statusText);
       }
     } catch (error) {
-      console.error("Error signing in:", error.message);
+      alert("Invalid email or password:", error.message);
     }
   };
 
@@ -36,7 +37,7 @@ export function AuthContextProvider({ children }) {
       });
       if (response.status === 200) {
         navigate("/");
-        alert("Sign up successful");
+        alert(response.data.message);
       }
     } catch (error) {
       console.error("Error signing up:", error.message);
@@ -55,13 +56,12 @@ export function AuthContextProvider({ children }) {
       setUser(JSON.parse(storedUser));
       navigate("/Home");
     }
-    setLoading(false); 
+    setLoading(false);
   }, []);
 
   if (loading) {
     return <div>Loading...</div>;
   }
-  
 
   return (
     <AuthContext.Provider
@@ -70,7 +70,7 @@ export function AuthContextProvider({ children }) {
         SignIn,
         Register,
         Logout,
-        BASE_URL
+        BASE_URL,
       }}
     >
       {children}
